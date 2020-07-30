@@ -1,0 +1,10 @@
+<h1>WorkOrders#index</h1>
+<p>Find me in app/views/work_orders/index.html.erb</p>
+
+<% @workorders.each do |wo| %>
+  <p> <%= wo.technician.name %> </p>
+<% end %>
+
+ <%@technicians.each do |t| %>
+  <p> <%=t.workorders.count %> </p>
+<% end %>
