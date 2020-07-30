@@ -33,7 +33,7 @@ puts 'Seeding Locations.......'
 CSV.foreach(locations_filepath, csv_options) do |row|
   puts "#{row[0]} - #{row['name']} - #{row['city']}"
   Location.find_or_create_by(
-    id: row[0], name: row['name'], city: ['city'])
+    id: row[0], name: row['name'], city: row['city'])
 end
 
 puts 'Locations added to database'
