@@ -1,8 +1,8 @@
 class CreateWorkOrders < ActiveRecord::Migration[6.0]
   def change
     create_table :work_orders do |t|
-      t.refrences :technician
-      t.refrences :location
+      t.references :technician, null: false, foreign_key: true
+      t.references :location, null: false, foreign_key: true
       t.datetime :time
       t.integer :duration
       t.integer :price
