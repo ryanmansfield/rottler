@@ -22,26 +22,22 @@ Location.delete_all
 puts 'Database Reset, Seeding Technicians.....'
 
 CSV.foreach(technicians_filepath, csv_options) do |row|
-  puts "#{row[0]} - #{row['name']}"
   Technician.find_or_create_by(id: row[0], name: row['name'] )
 end
 
 puts 'Technicians added to database'
-
 puts 'Seeding Locations.......'
 
 CSV.foreach(locations_filepath, csv_options) do |row|
-  puts "#{row[0]} - #{row['name']} - #{row['city']}"
   Location.find_or_create_by(
     id: row[0], name: row['name'], city: row['city'])
 end
 
 puts 'Locations added to database'
-
 puts 'Seeding Work Orders......'
 
 CSV.foreach(work_orders_filepath, csv_options) do |row|
-  puts "#{row['id']} - #{row['technician_id']} - #{row['location_id']} - #{row['time']} - #{row['duration']} - #{row['price']}"
+  time = DateTime.strptime( row['time'].insert(5, '20'), '%m/%d/%Y %k:%M')
   WorkOrder.find_or_create_by( id: row[0], technician_id: row['technician_id'],
                               location_id: row['location_id'], time: row['time'],
                               duration: row['duration'], price: row['price']
@@ -50,5 +46,4 @@ end
 
 
 puts 'Work Orders added to database'
-
 puts 'Database succesfully seeded'
