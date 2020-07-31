@@ -12,38 +12,66 @@ technicians_filepath = 'technicians.csv'
 locations_filepath = 'locations.csv'
 work_orders_filepath = 'work_orders.csv'
 
-puts 'Reseting database........'
+puts 'Deleting old information from database........'
 
+TimeSlot.delete_all
 WorkOrder.delete_all
 Technician.delete_all
 Location.delete_all
 
 
-puts 'Database Reset, Seeding Technicians.....'
+puts 'Database clean, Seeding Technicians.....'
 
-CSV.foreach(technicians_filepath, csv_options) do |row|
+CSV.foreach(technicians_filepath, **csv_options) do |row|
   Technician.find_or_create_by(id: row[0], name: row['name'] )
 end
 
-puts 'Technicians added to database'
-puts 'Seeding Locations.......'
+puts 'Technicians added to database, seeding time slots........'
 
-CSV.foreach(locations_filepath, csv_options) do |row|
+Technician.all.each do |tech|
+  start_time = DateTime.strptime( '10/1/2019 4:00', '%m/%d/%Y %k:%M')
+  end_time = DateTime.strptime( '10/1/2019 22:00', '%m/%d/%Y %k:%M')
+
+  until start_time == end_time
+    TimeSlot.create(start_time: start_time, end_time: (start_time + 5.minutes), duration: 5, technician_id: tech.id)
+    start_time += 5.minutes
+  end
+end
+
+puts 'Time slots added to database, seeding locations.......'
+
+CSV.foreach(locations_filepath, **csv_options) do |row|
   Location.find_or_create_by(
     id: row[0], name: row['name'], city: row['city'])
 end
 
 puts 'Locations added to database'
-puts 'Seeding Work Orders......'
+# puts 'Seeding Work Orders......'
 
-CSV.foreach(work_orders_filepath, csv_options) do |row|
-  time = DateTime.strptime( row['time'].insert(5, '20'), '%m/%d/%Y %k:%M')
-  WorkOrder.find_or_create_by( id: row[0], technician_id: row['technician_id'],
-                              location_id: row['location_id'], time: row['time'],
-                              duration: row['duration'], price: row['price']
-                              )
+CSV.foreach(work_orders_filepath, **csv_options) do |row|
+  # find the work order start time
+  start_time = DateTime.strptime( row['time'].insert(5, '20'), '%m/%d/%Y %k:%M')
+  # create the work order
+  workorder = WorkOrder.find_or_create_by( id: row[0], location_id: row['location_id'], start_time: start_time,
+                              duration: row['duration'], price: row['price'], end_time: start_time + row['duration'].to_i.minutes)
+  # # find the wo tech
+  technician = Technician.find(row['technician_id'])
+
+  # # #find time slot
+  wo_time_slot = technician.time_slots.find_by(start_time: start_time)
+
+  # # # upadate timeslot wo_id / duration / end_time
+  wo_time_slot.update(work_order_id: workorder.id, duration: workorder.duration, end_time: start_time + row['duration'].to_i.minutes, is_booked: true)
+
+  # # delete conflicting time slots
+  time_slots_to_delete = (row['duration'].to_i - 5) / 5
+  id_to_delete = wo_time_slot.id
+  time_slots_to_delete.times do
+    id_to_delete += 1
+    TimeSlot.delete(id_to_delete)
+  end
 end
 
 
-puts 'Work Orders added to database'
-puts 'Database succesfully seeded'
+# puts 'Work Orders added to database'
+# puts 'Database succesfully seeded'

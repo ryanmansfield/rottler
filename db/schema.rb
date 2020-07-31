@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_041926) do
+ActiveRecord::Schema.define(version: 2020_07_30_234825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,18 +28,31 @@ ActiveRecord::Schema.define(version: 2020_07_30_041926) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "work_orders", force: :cascade do |t|
+  create_table "time_slots", force: :cascade do |t|
     t.bigint "technician_id", null: false
+    t.bigint "work_order_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "duration"
+    t.boolean "is_booked", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["technician_id"], name: "index_time_slots_on_technician_id"
+    t.index ["work_order_id"], name: "index_time_slots_on_work_order_id"
+  end
+
+  create_table "work_orders", force: :cascade do |t|
     t.bigint "location_id", null: false
-    t.datetime "time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.integer "duration"
     t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_work_orders_on_location_id"
-    t.index ["technician_id"], name: "index_work_orders_on_technician_id"
   end
 
+  add_foreign_key "time_slots", "technicians"
+  add_foreign_key "time_slots", "work_orders"
   add_foreign_key "work_orders", "locations"
-  add_foreign_key "work_orders", "technicians"
 end
