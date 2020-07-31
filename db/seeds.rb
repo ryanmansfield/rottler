@@ -50,6 +50,7 @@ puts 'Locations added to database'
 
 CSV.foreach(work_orders_filepath, csv_options) do |row|
   start_time = DateTime.strptime( row['time'].insert(5, '20'), '%m/%d/%Y %k:%M')
+  # create the work order
   WorkOrder.find_or_create_by( id: row[0], location_id: row['location_id'], start_time: start_time,
                               duration: row['duration'], price: row['price'], end_time: start_time + 5.minutes)
 end
