@@ -1,6 +1,4 @@
-<!-- <% @workorders.each do |wo| %>
-  <p> <%= wo.technician.name %> </p>
-<% end %> -->
+
 <table>
   <thead>
     DATE of this TABLE
@@ -12,10 +10,13 @@
   </tr>
    <% @technicians.each do |t| %>
    <th>
-    <% t.work_orders.each do |workorder| %>
-      <%= render 'workorder', workorder: workorder %>
+    <div class="container">
+
+    <% t.time_slots.each do |timeslot| %>
+      <%= timeslot.duration %>
 
     <% end %>
+    </div>
   </th>
   <% end %>
 
