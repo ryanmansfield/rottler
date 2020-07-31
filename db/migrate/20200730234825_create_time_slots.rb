@@ -2,6 +2,7 @@ class CreateTimeSlots < ActiveRecord::Migration[6.0]
   def change
     create_table :time_slots do |t|
       t.references :technician, null: false, foreign_key: true
+      t.references :work_order, null: true, foreign_key: true
       t.datetime :start_time
       t.datetime :end_time
       t.integer :duration
