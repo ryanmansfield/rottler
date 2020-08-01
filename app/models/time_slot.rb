@@ -15,9 +15,11 @@ class TimeSlot < ApplicationRecord
     range_start_time = booked_before.sort_by{ |ts| ts.end_time}.first.end_time if booked_before.count > 0
 
     range_end_time = Time.parse( '10/1/2019 17:00')
-    range_end_time = booked_after.sort_by{ |ts| ts.start_time}.first.end_time if booked_after.count > 0
+    range_end_time = booked_after.sort_by{ |ts| ts.start_time}.first.start_time if booked_after.count > 0
 
-    range = (range_end_time - range_start_time)
+    range = Time.at(range_end_time - range_start_time).utc.strftime("%H:%M")
+
+    # range = (range_end_time - range_start_time)
 
   end
 end
