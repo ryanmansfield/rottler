@@ -21,7 +21,7 @@
               </div>
             </div>
           <% else %>
-            <div class="row" style="height: <%=(time_slot.duration)%>px;">
+            <div class="row unbooked" style="height: <%=(time_slot.duration)%>px"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot%>" >
 
             </div>
           <% end %>
@@ -31,4 +31,4 @@
   </div>
 </div>
 
-
+<%= render 'time_slot_modal' %>
