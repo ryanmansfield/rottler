@@ -11,16 +11,14 @@ class TimeSlot < ApplicationRecord
         time_slot.start_time < current_time_slot.start_time ? booked_before << time_slot : booked_after << time_slot
       end
     end
-    range_start_time = Time.parse( '10/1/2019 6:00')
-    range_start_time = booked_before.sort_by{ |ts| ts.end_time}.first.end_time if booked_before.count > 0
+    range_start_time = DateTime.parse( '10/1/2019 6:00')
+    range_end_time = DateTime.parse( '10/1/2019 17:00')
 
-    range_end_time = Time.parse( '10/1/2019 17:00')
+    range_start_time = booked_before.sort_by{ |ts| ts.end_time}.last.end_time if booked_before.count > 0
     range_end_time = booked_after.sort_by{ |ts| ts.start_time}.first.start_time if booked_after.count > 0
 
-    range = Time.at(range_end_time - range_start_time).utc.strftime("%H:%M")
-
-    # range = (range_end_time - range_start_time)
-
+    range = range_end_time.to_i - range_start_time.to_i
+    range = Time.at(range).utc.strftime("%H:%M")
   end
 end
 
