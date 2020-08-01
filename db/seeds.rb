@@ -30,7 +30,7 @@ puts 'Technicians added to database, seeding time slots........'
 
 Technician.all.each do |tech|
   start_time = DateTime.parse( '10/1/2019 4:00')
-  end_time = DateTime.parse( '10/1/2019 22:00')
+  end_time = DateTime.parse( '10/1/2019 20:00')
 
   until start_time == end_time
     TimeSlot.create(start_time: start_time, end_time: (start_time + 5.minutes), duration: 5, technician_id: tech.id)
