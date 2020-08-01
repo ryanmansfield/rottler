@@ -8,7 +8,7 @@
         <span>times</span>
       </div>
       <% time = DateTime.parse( '10/1/2019 6:00') %>
-      <% 12.times do %>
+      <% 11.times do %>
         <div style="height: 60px; border:solid 1px black;"><%= time.hour %>:00</div>
         <% time += 60.minute %>
       <% end %>
