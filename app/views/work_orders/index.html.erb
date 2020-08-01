@@ -1,29 +1,48 @@
-
-<table>
-  <thead>
-    DATE of this TABLE
-  </thead>
-  <tr>
-    <% @technicians.each do |tech|  %>
-      <th> <%= tech.name%></th>
-    <% end %>
-  </tr>
-   <% @technicians.each do |t| %>
-   <th>
-    <div class="container">
-
-    <% t.time_slots.each do |timeslot| %>
-      <%= timeslot.duration %>
-
-    <% end %>
+<div class="container">
+  <div class="row">
+    <span><h1>Appointments on 10/1/2019</h1></span>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <div class="row" style="height: 44px;">
+        <span>times</span>
+      </div>
+      <% time = DateTime.parse( '10/1/2019 6:00') %>
+      <% 11.times do %>
+        <div style="height: 60px; border:solid 1px black;"><%= time.hour %>:00</div>
+        <% time += 60.minute %>
+      <% end %>
     </div>
-  </th>
-  <% end %>
+    <div class="col-11">
+      <div class="row"style="height: 44px;">
+        <% @technicians.each do |tech|  %>
+          <div class="col">
+            <h2><%= tech.name%></h2>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <% @technicians.each do |tech| %>
+          <div class="col">
+            <% tech.time_slots.sort.each do |time_slot| %>
+              <% if time_slot.is_booked? %>
+                <div class="row" style="height: <%=(time_slot.duration)%>px; overflow: hidden;">
+                  <div class="container">
 
-  <tr>
+                    <%= render 'workorder', workorder: time_slot.work_order_id  %>
+                  </div>
+                </div>
+              <% else %>
+                <div class="row unbooked" style="height: <%=(time_slot.duration)%>px; border: solid 1px black;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
 
-  </tr>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-</table>
-
-
+<%= render 'time_slot_modal' %>

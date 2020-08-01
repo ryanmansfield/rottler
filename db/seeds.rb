@@ -29,8 +29,8 @@ end
 puts 'Technicians added to database, seeding time slots........'
 
 Technician.all.each do |tech|
-  start_time = DateTime.strptime( '10/1/2019 4:00', '%m/%d/%Y %k:%M')
-  end_time = DateTime.strptime( '10/1/2019 22:00', '%m/%d/%Y %k:%M')
+  start_time = DateTime.parse( '10/1/2019 6:00')
+  end_time = DateTime.parse( '10/1/2019 17:00')
 
   until start_time == end_time
     TimeSlot.create(start_time: start_time, end_time: (start_time + 5.minutes), duration: 5, technician_id: tech.id)
@@ -45,12 +45,12 @@ CSV.foreach(locations_filepath, **csv_options) do |row|
     id: row[0], name: row['name'], city: row['city'])
 end
 
-puts 'Locations added to database'
-# puts 'Seeding Work Orders......'
+puts 'Locations added to database, seeding work orders...............'
 
 CSV.foreach(work_orders_filepath, **csv_options) do |row|
   # find the work order start time
-  start_time = DateTime.strptime( row['time'].insert(5, '20'), '%m/%d/%Y %k:%M')
+  start_time = DateTime.parse( row['time'].insert(5, '20'))
+
   # create the work order
   workorder = WorkOrder.find_or_create_by( id: row[0], location_id: row['location_id'], start_time: start_time,
                               duration: row['duration'], price: row['price'], end_time: start_time + row['duration'].to_i.minutes)
@@ -59,6 +59,11 @@ CSV.foreach(work_orders_filepath, **csv_options) do |row|
 
   # # #find time slot
   wo_time_slot = technician.time_slots.find_by(start_time: start_time)
+
+  # if !wo_time_slot.present?
+  #   byebug
+  #   wo_time_slot = TimeSlot.create(start_time: start_time, end_time: (start_time + 5.minutes), duration: 5, technician_id: technician.id)
+  # end
 
   # # # upadate timeslot wo_id / duration / end_time
   wo_time_slot.update(work_order_id: workorder.id, duration: workorder.duration, end_time: start_time + row['duration'].to_i.minutes, is_booked: true)
@@ -73,5 +78,5 @@ CSV.foreach(work_orders_filepath, **csv_options) do |row|
 end
 
 
-# puts 'Work Orders added to database'
-# puts 'Database succesfully seeded'
+puts 'Work Orders added to database'
+puts 'Database succesfully seeded'

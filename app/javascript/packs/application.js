@@ -17,11 +17,12 @@ import 'bootstrap';
 
 // Internal imports
 
-
+import { timeSlotModal } from '../components/time_slot_modal';
 
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
+  timeSlotModal();
 
 });
 
