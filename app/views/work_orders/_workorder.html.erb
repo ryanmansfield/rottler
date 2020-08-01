@@ -1,5 +1,6 @@
 <div class="container">
-  <p> Start Time: <%= workorder.time %> </p>
-  <p><%= workorder.location.city %> - <%= workorder.location.name %> </p>
-  <p>Price: <%= workorder.price %> </p>
+<% wo = WorkOrder.find(workorder) %>
+  <p><%= wo.start_time %></p>
+  <p><%= wo.location.name %> - <%= wo.location.city %></p>
+  <p><%= wo.price %></p>
 </div>

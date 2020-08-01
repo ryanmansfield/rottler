@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <span><h1>Appointments on Date</h1></span>
   </div>
@@ -14,9 +14,13 @@
       <div class="col">
         <% tech.time_slots.sort.each do |time_slot| %>
           <div class="row">
+            <p><%= time_slot.start_time %></p>
             <% if time_slot.is_booked? %>
               <div class="container">
-                <%= render 'workorder', workorder: time_slot.work_order_id  %>
+                <p>time slot booked</p>
+                <p><%= time_slot.duration %></p>
+                  <%= render template: 'work_orders/show', workorder: time_slot.work_order_id  %>
+
               </div>
             <% end %>
           </div>
@@ -25,5 +29,4 @@
     <% end %>
   </div>
 </div>
-
-
+ -->
