@@ -9,7 +9,7 @@ const timeSlotModal = () => {
       // modal.find('.modal-body').text('New message to ')
       console.log(timeSlot.id)
 
-      modal.find('.modal-title').text('This Time Slot has this much time ' + timeSlot.id )
+      modal.find('.modal-title').text('This Time Slot has this much time ' + timeSlot )
       // modal.find('.modal-body input').val(recipient)
     });
 
