@@ -3,7 +3,7 @@
     <span><h1>Appointments on 10/1/2019</h1></span>
   </div>
   <div class="row">
-    <div class="col-1">
+    <div class="col-1" style="padding-right: 4px;">
       <div class="row table-header"></div>
       <% time = DateTime.parse( '10/1/2019 6:00') %>
       <% 11.times do %>
@@ -30,6 +30,9 @@
               <% else %>
                 <% if time_slot.start_time.strftime('%M') == "00" %>
                   <div class="row unbooked hour-slot" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  </div>
+                <% elsif time_slot.end_time == DateTime.parse('10/1/2019 17:00') %>
+                  <div class="row unbooked end" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
                   </div>
                 <% else %>
                   <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
