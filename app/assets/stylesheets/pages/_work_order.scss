@@ -1,0 +1,37 @@
+// Specific CSS for your home-page
+
+.unbooked:hover {
+  cursor: pointer;
+}
+
+.hour {
+  height: 60px;
+  border-top: solid 1px $black;
+}
+
+.table-header {
+  height: 44px;
+}
+
+.work-order-container {
+  overflow: hidden;
+  border: solid 1px $black;
+}
+
+.unbooked {
+
+}
+.hour-slot {
+  border-top: solid 1px $black;
+}
+
+.work-order {
+  overflow: hidden;
+  background-color: $white;
+  height: -webkit-fill-available;
+}
+
+.table-body-col {
+  margin-left: 4px;
+  margin-right: 4px;
+}

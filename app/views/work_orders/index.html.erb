@@ -4,17 +4,15 @@
   </div>
   <div class="row">
     <div class="col-1">
-      <div class="row" style="height: 44px;">
-        <span>times</span>
-      </div>
+      <div class="row table-header"></div>
       <% time = DateTime.parse( '10/1/2019 6:00') %>
       <% 11.times do %>
-        <div style="height: 60px; border:solid 1px black;"><%= time.hour %>:00</div>
+        <div class="hour"><%= time.hour %>:00</div>
         <% time += 60.minute %>
       <% end %>
     </div>
     <div class="col-11">
-      <div class="row"style="height: 44px;">
+      <div class="row table-header">
         <% @technicians.each do |tech|  %>
           <div class="col">
             <h2><%= tech.name%></h2>
@@ -23,20 +21,18 @@
       </div>
       <div class="row">
         <% @technicians.each do |tech| %>
-          <div class="col">
+          <div class="col table-body-col">
             <% tech.time_slots.sort.each do |time_slot| %>
               <% if time_slot.is_booked? %>
-                <div class="row" style="height: <%=(time_slot.duration)%>px; overflow: hidden;">
-                  <div class="container">
-                    <%= render 'workorder', workorder: time_slot.work_order_id  %>
-                  </div>
+                <div class="row work-order-container" style="height: <%=(time_slot.duration)%>px;">
+                  <%= render 'workorder', workorder: time_slot.work_order_id  %>
                 </div>
               <% else %>
                 <% if time_slot.start_time.strftime('%M') == "00" %>
-                  <div class="row unbooked hour" style="height: <%=(time_slot.duration)%>px; border: solid 1px black;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  <div class="row unbooked hour-slot" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
                   </div>
                 <% else %>
-                  <div class="row unbooked" style="height: <%=(time_slot.duration)%>px; border: solid 1px black;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
                   </div>
                 <% end %>
               <% end %>
