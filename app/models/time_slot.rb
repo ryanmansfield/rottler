@@ -1,7 +1,7 @@
 class TimeSlot < ApplicationRecord
   belongs_to :technician
 
-  def range(time_slot_id)
+  def range_duration(time_slot_id)
     current_time_slot = TimeSlot.find(time_slot_id)
     technician = current_time_slot.technician
     booked_before = []

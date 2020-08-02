@@ -19,7 +19,7 @@
           </div>
         <% end %>
       </div>
-      <div class="row">
+      <div class="row table-content">
         <% @technicians.each do |tech| %>
           <div class="col table-body-col">
             <% tech.time_slots.sort_by(&:start_time).each do |time_slot| %>
@@ -29,13 +29,13 @@
                 </div>
               <% else %>
                 <% if time_slot.start_time == DateTime.parse('10/1/2019 6:00') %>
-                  <div class="row unbooked start" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  <div class="row unbooked start" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range_duration(time_slot.id)%>" >
                   </div>
                 <% elsif time_slot.end_time == DateTime.parse('10/1/2019 17:00') %>
-                  <div class="row unbooked end" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  <div class="row unbooked end" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range_duration(time_slot.id)%>" >
                   </div>
                 <% else %>
-                  <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range(time_slot.id)%>" >
+                  <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range_duration(time_slot.id)%>" >
                   </div>
                 <% end %>
               <% end %>
