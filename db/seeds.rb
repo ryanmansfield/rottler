@@ -63,11 +63,6 @@ CSV.foreach(work_orders_filepath, **csv_options) do |row|
   # # #find time slot
   wo_time_slot = technician.time_slots.find_by(start_time: start_time)
 
-  # if !wo_time_slot.present?
-  #   byebug
-  #   wo_time_slot = TimeSlot.create(start_time: start_time, end_time: (start_time + 5.minutes), duration: 5, technician_id: technician.id)
-  # end
-
   # # # upadate timeslot wo_id / duration / end_time
   wo_time_slot.update(
     work_order_id: workorder.id, duration: workorder.duration,
