@@ -8,6 +8,7 @@
   height: 60px;
   border-top: solid 1px $black;
   border-bottom: solid 1px $black;
+  border-left: solid 1px $black;
 }
 
 .table-header {
@@ -19,10 +20,6 @@
   border: solid 1px $black;
 }
 
-.start {
-  border-top: solid 1px $black;
-}
-
 .work-order {
   overflow: hidden;
   background-color: $white;
@@ -31,16 +28,14 @@
 .table-content {
   height: 660px;
   overflow: hidden;
+  border-top: solid 1px $black;
+  border-bottom: solid 1px $black;
 }
 
 .table-body-col {
   border-right: solid 1px $black;
   border-left: solid 1px $black;
   overflow: hidden;
-}
-
-.end {
-  border-bottom: solid 1px $black;
 }
 
 .modal-content {
