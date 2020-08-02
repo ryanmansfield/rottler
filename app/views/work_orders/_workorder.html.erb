@@ -1,6 +1,12 @@
-<div class="container">
 <% wo = WorkOrder.find(workorder) %>
-  <p><%= wo.start_time %></p>
-  <p><%= wo.location.name %> - <%= wo.location.city %></p>
-  <p><%= wo.price %></p>
+<div class="container work-order">
+  <div class="row">
+    <div class="col">
+      <span><%= wo.start_time.strftime('%H:%M') %></span>
+    </div>
+    <div class="col">
+      <span>$<%= wo.price %></span>
+    </div>
+  </div>
+  <span><%= wo.location.name %> - <%= wo.location.city %></span>
 </div>
