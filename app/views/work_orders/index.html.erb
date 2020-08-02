@@ -28,10 +28,8 @@
                   <%= render 'workorder', workorder: time_slot.work_order_id  %>
                 </div>
               <% else %>
-
-                  <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=time_slot.range_duration(time_slot.id)%>" >
-                  </div>
-
+                <div class="row unbooked" style="height: <%=(time_slot.duration)%>px;"; data-toggle="modal" data-target="#timeSlotModal" data-time-slot="<%=Time.at(time_slot.duration).utc.strftime("%H:%M:%S")%>" >
+                </div>
               <% end %>
             <% end %>
           </div>
