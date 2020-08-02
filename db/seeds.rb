@@ -61,7 +61,7 @@ CSV.foreach(work_orders_filepath, **csv_options) do |row|
     # Find Time Slot Range
     range = time_slot.start_time..time_slot.end_time
     # check if new work order start time is in that time slots range
-    if range.include?(workorder.start_time) && time_slot.start_time == workorder.start_time
+    if range.include?(workorder.start_time) && (time_slot.start_time == workorder.start_time || time_slot.end_time == workorder.end_time)
       # update time slot start time to work order end time and create new time slot for work order
       time_slot.update(
         start_time: workorder.end_time, duration: (time_slot.end_time.to_i - workorder.end_time.to_i) / 60
